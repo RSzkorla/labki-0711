@@ -39,7 +39,7 @@ namespace labki0711
         nazwisko = n;
         adres = new Adres(m);
         id = default(int);
-        nazwy_dokumentów = new string[default(int)];
+        nazwy_dokumentów = new string[] { "Dowód", "Prawko", "Paszport" };
       }
 
       public void Show()
@@ -52,6 +52,22 @@ namespace labki0711
           Console.WriteLine(item);
         }
       }
+      public Osoba ShallowCopy()
+      {
+        return  (Osoba)this.MemberwiseClone();
+      }
+      public Osoba DeepCopy()
+      {
+        var temp = this.ShallowCopy();
+        temp.nazwy_dokumentów = new string[this.nazwy_dokumentów.Length];
+        int i = 0;
+        foreach (var item in temp.nazwy_dokumentów)
+        {
+          temp.nazwy_dokumentów[i] = this.nazwy_dokumentów[i];
+          i++;
+        }
+        return temp;
+      }
     }
     static void Main(string[] args)
     {
@@ -61,6 +77,7 @@ namespace labki0711
       {
         Console.WriteLine($"Dodaj {i+1} osobę");
         osoby.Add(new Osoba(Console.ReadLine(), Console.ReadLine(), Console.ReadLine()));
+
       }
 
       foreach (var item in osoby)
